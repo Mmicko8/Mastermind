@@ -10,7 +10,7 @@ class Game:
 
     def __init__(self, root):
         self.board = Board(self.NUMBER_OF_CIRCLES, self.MAX_NUMBER_OF_MOVES, self)
-        self.random_combination = self.create_combination() # todo check if correct
+        self.random_combination = self.create_combination()  # todo check if correct
         self.current_move = 0
         self.guess_combination = []
         self.hint_used = False
@@ -55,15 +55,18 @@ class Game:
           If the guess combination is not complete, the method displays
           an error message.
         """
+        print(self.guess_combination)
+        print(self.random_combination)
         # check if a complete combination is provided
         if len(self.guess_combination) < self.NUMBER_OF_CIRCLES:
             messagebox.showerror("Error!", "Please fill in a complete combo before hitting the 'Check' button!")
         else:
             self.current_move = self.current_move + 1
             nb_black_white_matches = self.get_nb_black_white_matches(self.random_combination, self.guess_combination)
+            print(nb_black_white_matches)
 
             # print nb_black_white_matches
-            self.board.matching_position_label["text"] = str(nb_black_white_matches[0]) # todo check if correct
+            self.board.matching_position_label["text"] = str(nb_black_white_matches[0])  # todo check if correct
             self.board.correct_color_label["text"] = str(nb_black_white_matches[1])
             if nb_black_white_matches[0] == self.NUMBER_OF_CIRCLES:
                 messagebox.showinfo("Congratulations", "You have won the game")
@@ -106,10 +109,11 @@ class Game:
         """ Returns a random combination involving the number of elements."""
         combinatie_kleuren = []
 
-        while self.NUMBER_OF_CIRCLES > 0:
+        i = self.NUMBER_OF_CIRCLES
+        while i > 0:
             a = randint(0, len(self.board.ALL_COLORS) - 1)
             combinatie_kleuren.append(self.board.ALL_COLORS[a])
-            self.NUMBER_OF_CIRCLES -= 1
+            i -= 1
 
         return combinatie_kleuren
 
@@ -139,8 +143,9 @@ class Game:
                 messagebox.showinfo('Sublist', "The sublist is false.")
 
             for x in range(self.NUMBER_OF_CIRCLES):
-                self.board.canvas.itemconfig(self.board.ovals[self.current_move][x], fill='light grey') # todo make a bit cleaner
-            guess_combination = []
+                self.board.canvas.itemconfig(self.board.ovals[self.current_move][x],
+                                             fill='light grey')  # todo make a bit cleaner
+            self.guess_combination = []
 
     def is_sublist_of(self, sublist, given):
         """ Returns whether the sublist is part of the given combination.
@@ -164,8 +169,8 @@ class Game:
         if not self.hint_used:
             index = randint(0, self.NUMBER_OF_CIRCLES - 1)
             result = (combinatie[index], f'position: {index + 1}')
-            messagebox.showinfo('Hint', result) # TODO
-            used = True
+            messagebox.showinfo('Hint', result)  # TODO
+            self.hint_used = True
 
         else:
             messagebox.showerror('ERROR', 'Hint has already been used this game.')

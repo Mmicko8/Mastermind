@@ -18,7 +18,7 @@ class Board:
         self.max_number_of_moves = max_number_of_moves
         self.game = game
 
-    def color(self, color_name, current_move, guess_combination):
+    def color(self, color_name):
 
         """
           Add the given color to the guess combination. The corresponding circle
@@ -26,19 +26,19 @@ class Board:
           complete, an error message is displayed.
         """
 
-        if len(guess_combination) == self.number_of_circles:
+        if len(self.game.guess_combination) == self.number_of_circles:
             messagebox.showerror("Colors are full",
                                  "No more colors allowed, please hit the 'Check' button to check your result")
         else:
-            self.canvas.itemconfig(self.ovals[current_move][len(guess_combination)], fill=color_name)
-            guess_combination.append(color_name)
+            self.canvas.itemconfig(self.ovals[self.game.current_move][len(self.game.guess_combination)], fill=color_name)
+            self.game.guess_combination.append(color_name)
 
-    def draw_color_buttons(self, current_move, guess_combination):
+    def draw_color_buttons(self):
         for i in range(len(self.ALL_COLORS)):
             self.canvas.create_window(self.number_of_circles * 50 + 10, 20 + i * 45, anchor=NW,
                                       window=Button(self.canvas,
                                                     command=lambda color_name=self.ALL_COLORS[i]: self.color(
-                                                        color_name, current_move, guess_combination),
+                                                        color_name),
                                                     width=5,
                                                     text=self.ALL_COLORS[i]))
 
@@ -62,14 +62,15 @@ class Board:
         self.canvas.create_window(50, self.max_number_of_moves * 40 + 30, anchor=NW,
                                   window=Label(self.canvas, text="Correct position: "))
 
-        matching_position_label = Label(self.canvas)
-        self.canvas.create_window(200, self.max_number_of_moves * 40 + 30, anchor=NW, window=matching_position_label)
+        self.matching_position_label = Label(self.canvas)
+        self.canvas.create_window(200, self.max_number_of_moves * 40 + 30, anchor=NW,
+                                  window=self.matching_position_label)
 
         self.canvas.create_window(50, self.max_number_of_moves * 40 + 60, anchor=NW,
                                   window=Label(self.canvas, text="Correct color: "))
 
-        correct_color_label = Label(self.canvas)
-        self.canvas.create_window(200, self.max_number_of_moves * 40 + 60, anchor=NW, window=correct_color_label)
+        self.correct_color_label = Label(self.canvas)
+        self.canvas.create_window(200, self.max_number_of_moves * 40 + 60, anchor=NW, window=self.correct_color_label)
 
     def draw_submit_button(self):
         submit_button = Button(self.canvas, text="Check", command=self.game.check_combination)
@@ -91,7 +92,7 @@ class Board:
         quit_button.configure(width=10, relief=FLAT)
         self.canvas.create_window(180, self.max_number_of_moves * 40 + 130, anchor=NW, window=quit_button)
 
-    def draw_board(self, root, current_move, guess_combination):
+    def draw_board(self, root):
         """
           Create the graphical user interface.
         """
@@ -111,7 +112,7 @@ class Board:
                                 fill="black")
 
         # Draw the color buttons that will be used throughout the game
-        self.draw_color_buttons(current_move, guess_combination)
+        self.draw_color_buttons()
 
         # Draw the result labels
         # ! matching_position_label and correct_color_label can be used later on

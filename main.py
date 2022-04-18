@@ -6,7 +6,7 @@ from Board import Board
 def main():
     root = Tk()
     game = Game(root)
-    game.board.draw_board(root, game.current_move, game.guess_combination)
+    game.board.draw_board(root)
     root.mainloop()
 
 
