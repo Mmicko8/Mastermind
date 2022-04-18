@@ -1,5 +1,4 @@
-from tkinter import (Tk,
-                     messagebox)
+from tkinter import (messagebox)
 from Board import Board
 from random import randint
 
@@ -10,7 +9,7 @@ class Game:
     MAX_NUMBER_OF_MOVES = 10
 
     def __init__(self, root):
-        self.board = Board(self.NUMBER_OF_CIRCLES, self.MAX_NUMBER_OF_MOVES)
+        self.board = Board(self.NUMBER_OF_CIRCLES, self.MAX_NUMBER_OF_MOVES, self)
         self.random_combination = self.create_combination() # todo check if correct
         self.current_move = 0
         self.guess_combination = []

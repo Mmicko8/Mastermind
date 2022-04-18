@@ -9,13 +9,14 @@ from tkinter import (Button,
 class Board:
     ALL_COLORS = ("red", "green", "blue", "yellow", "orange", "white")
 
-    def __init__(self, number_of_circles, max_number_of_moves):
+    def __init__(self, number_of_circles, max_number_of_moves, game):
         self.canvas = None
         self.ovals = None
-        self.matching_position_label = None
-        self.correct_color_label = None
+        self.matching_position_label = ""
+        self.correct_color_label = ""
         self.number_of_circles = number_of_circles
         self.max_number_of_moves = max_number_of_moves
+        self.game = game
 
     def color(self, color_name, current_move, guess_combination):
 
@@ -71,17 +72,17 @@ class Board:
         self.canvas.create_window(200, self.max_number_of_moves * 40 + 60, anchor=NW, window=correct_color_label)
 
     def draw_submit_button(self):
-        submit_button = Button(self.canvas, text="Check", command=check_combination)
+        submit_button = Button(self.canvas, text="Check", command=self.game.check_combination)
         submit_button.configure(width=10, relief=FLAT)
         self.canvas.create_window(50, self.max_number_of_moves * 40 + 90, anchor=NW, window=submit_button)
 
     def draw_sublist_button(self):
-        sublist_button = Button(self.canvas, text="Sublist", command=is_sublist)
+        sublist_button = Button(self.canvas, text="Sublist", command=self.game.is_sublist)
         sublist_button.configure(width=10, relief=FLAT)
         self.canvas.create_window(180, self.max_number_of_moves * 40 + 90, anchor=NW, window=sublist_button)
 
     def draw_hint_button(self):
-        hint_button = Button(self.canvas, text="Hint", command=hint)
+        hint_button = Button(self.canvas, text="Hint", command=self.game.hint)
         hint_button.configure(width=10, relief=FLAT)
         self.canvas.create_window(50, self.max_number_of_moves * 40 + 130, anchor=NW, window=hint_button)
 
@@ -99,14 +100,15 @@ class Board:
         root.title("Mastermind")
 
         # canvas will be the main board used for mastermind
-        canvas = Canvas(root, bg="white", height=self.max_number_of_moves * 40 + 170,
-                        width=self.number_of_circles * 50 + 100)
+        self.canvas = Canvas(root, bg="white", height=self.max_number_of_moves * 40 + 170,
+                             width=self.number_of_circles * 50 + 100)
 
         # Draw the empty circles representing the guesses
         self.ovals = self.create_empty_circles()
 
         # Draw a line to separate the circles form the buttons
-        canvas.create_line(self.number_of_circles * 50, 10, self.number_of_circles * 50, 400, width=3, fill="black")
+        self.canvas.create_line(self.number_of_circles * 50, 10, self.number_of_circles * 50, 400, width=3,
+                                fill="black")
 
         # Draw the color buttons that will be used throughout the game
         self.draw_color_buttons(current_move, guess_combination)
@@ -136,4 +138,4 @@ class Board:
         self.draw_quit_button(root)
 
         # draw the canvas
-        canvas.pack()
+        self.canvas.pack()
