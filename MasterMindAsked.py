@@ -81,21 +81,6 @@ def create_combination(nb_elements):
 # ! Make sure that all the circles you draw get the fill color "grey".
 
 
-def create_empty_circles(canvas, number_of_circles, max_number_of_moves):
-    """ Returns a matrix containing grey ovals that are correctly initialized
-        at their required location."""
-    ovals = []
-
-    for i in range(max_number_of_moves):
-        ovals.insert(0,[])
-
-    for i in range(max_number_of_moves):
-        for x in range(number_of_circles):
-            circle = canvas.create_oval(10 + 40*x, 10 + 40*i, 40 + 40*x, 40 + 40*i, fill = 'light gray')
-            ovals[i].append(circle)
-
-    return ovals
-
 
 def any_color_in_combination(colors, given):
     """ Returns true if at least one color in colors is part of the
