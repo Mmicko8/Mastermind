@@ -9,9 +9,6 @@ from tkinter import (Button,
 class Board:
     ALL_COLORS = ("red", "green", "blue", "yellow", "orange", "white")
 
-    # NUMBER_OF_CIRCLES = 4
-    # MAX_NUMBER_OF_MOVES = 10
-
     def __init__(self, number_of_circles, max_number_of_moves):
         self.canvas = None
         self.ovals = None

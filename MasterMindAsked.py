@@ -5,49 +5,49 @@ ALL_COLORS = ("red", "green", "blue", "yellow", "orange", "white")
 NUMBER_OF_CIRCLES = 4
 
 
-def get_nb_black_white_matches(given, guess):
-    """ Returns the number of black and white matches of the guessed
-    combination with respect to the given combination. The first
-    element in the resulting tuple reflects the number of correct colors
-    on their positions (black matches). The second element reflects
-    the number of correct colors not on their position (white matches)."""
-
-    correcte_positie = 0
-    correcte_kleur = 0
-    current_index = 0
-
-    for color in ALL_COLORS:
-        aantal_random = given.count(color)
-        aantal_guess = guess.count(color)
-
-        if aantal_random >= aantal_guess:   #GEBRUIK min() functie
-            correcte_kleur += aantal_guess
-        elif aantal_random < aantal_guess:
-            correcte_kleur += aantal_random
-
-    while current_index < NUMBER_OF_CIRCLES:
-        if guess[current_index] == given[current_index]:
-            correcte_positie += 1
-            correcte_kleur -= 1
-        current_index += 1
-
-    return((correcte_positie,correcte_kleur))
+# def get_nb_black_white_matches(given, guess):
+#     """ Returns the number of black and white matches of the guessed
+#     combination with respect to the given combination. The first
+#     element in the resulting tuple reflects the number of correct colors
+#     on their positions (black matches). The second element reflects
+#     the number of correct colors not on their position (white matches)."""
+#
+#     correcte_positie = 0
+#     correcte_kleur = 0
+#     current_index = 0
+#
+#     for color in ALL_COLORS:
+#         aantal_random = given.count(color)
+#         aantal_guess = guess.count(color)
+#
+#         if aantal_random >= aantal_guess:   #GEBRUIK min() functie
+#             correcte_kleur += aantal_guess
+#         elif aantal_random < aantal_guess:
+#             correcte_kleur += aantal_random
+#
+#     while current_index < NUMBER_OF_CIRCLES:
+#         if guess[current_index] == given[current_index]:
+#             correcte_positie += 1
+#             correcte_kleur -= 1
+#         current_index += 1
+#
+#     return((correcte_positie,correcte_kleur))
 
 
 assert get_nb_black_white_matches(["red", "yellow", "yellow", "blue"], ["blue", "yellow", "blue", "yellow"]) == (1, 2)
 assert get_nb_black_white_matches(["blue", "yellow", "red", "blue"], ["blue", "yellow", "blue", "yellow"]) == (2, 1)
 
 
-def create_combination(nb_elements):
-    """ Returns a random combination involving the number of elements."""
-    combinatie_kleuren = []
-
-    while nb_elements > 0:
-        a = randint(0,len(ALL_COLORS)-1)
-        combinatie_kleuren.append(ALL_COLORS[a])
-        nb_elements -= 1
-
-    return combinatie_kleuren
+# def create_combination(nb_elements):
+#     """ Returns a random combination involving the number of elements."""
+#     combinatie_kleuren = []
+#
+#     while nb_elements > 0:
+#         a = randint(0,len(ALL_COLORS)-1)
+#         combinatie_kleuren.append(ALL_COLORS[a])
+#         nb_elements -= 1
+#
+#     return combinatie_kleuren
 
 # ! on the board, each row will consist of 4 circles representing 1 guess
 # ! in total 10 rows should be drawn (as the user is given 10 guesses)
@@ -82,17 +82,17 @@ def create_combination(nb_elements):
 
 
 
-def any_color_in_combination(colors, given):
-    """ Returns true if at least one color in colors is part of the
-    given combination. False otherwise."""
-
-    index = 0
-    for color in colors:
-        if given.count(color) > 0:  ##Gebruik if color in return True en zo niet return False.
-            return True
-        else:
-            index += 1
-    return False
+# def any_color_in_combination(colors, given):
+#     """ Returns true if at least one color in colors is part of the
+#     given combination. False otherwise."""
+#
+#     index = 0
+#     for color in colors:
+#         if given.count(color) > 0:  ##Gebruik if color in return True en zo niet return False.
+#             return True
+#         else:
+#             index += 1
+#     return False
 
 
 assert any_color_in_combination(['blue', 'green', 'red', 'yellow'], ['green', 'blue', 'red', 'yellow'])
@@ -100,40 +100,40 @@ assert not any_color_in_combination(['white', 'white', 'purple', 'white'], ['gre
 assert any_color_in_combination(['blue'], ['red','white', 'blue'])
 
 
-def all_colors_in_combination(colors, given):
-    """ Returns true if all the colors in colors are part of the
-    given combination. False otherwise."""
-
-    correcte_kleur = 0
-
-    for color in colors:
-        aantal_colors = colors.count(color)
-        aantal_given = given.count(color)
-
-        if aantal_given >= aantal_colors:
-            correcte_kleur += aantal_colors
-        elif aantal_given < aantal_colors:
-            correcte_kleur += aantal_given
-
-    if correcte_kleur == len(colors):
-        return True
+# def all_colors_in_combination(colors, given):
+#     """ Returns true if all the colors in colors are part of the
+#     given combination. False otherwise."""
+#
+#     correcte_kleur = 0
+#
+#     for color in colors:
+#         aantal_colors = colors.count(color)
+#         aantal_given = given.count(color)
+#
+#         if aantal_given >= aantal_colors:
+#             correcte_kleur += aantal_colors
+#         elif aantal_given < aantal_colors:
+#             correcte_kleur += aantal_given
+#
+#     if correcte_kleur == len(colors):
+#         return True
 
 
 assert all_colors_in_combination(['blue', 'green', 'red', 'yellow'], ['green', 'blue', 'red', 'yellow'])
 assert not all_colors_in_combination(['blue', 'green', 'red', 'yellow'], ['green', 'blue', 'red', 'purple'])
 
 
-def is_sublist_of(sublist, given):
-    """ Returns whether the sublist is part of the given combination.
-    The order of the sublist must also correspond to the order of the
-    corresponding part in the given combination."""
-
-    for i in range(0,len(given)-len(sublist)+1):
-        if given[i:i+len(sublist)] == sublist:
-            return True
-        # else:
-        #     i += 1
-    return False
+# def is_sublist_of(sublist, given):
+#     """ Returns whether the sublist is part of the given combination.
+#     The order of the sublist must also correspond to the order of the
+#     corresponding part in the given combination."""
+#
+#     for i in range(0,len(given)-len(sublist)+1):
+#         if given[i:i+len(sublist)] == sublist:
+#             return True
+#         # else:
+#         #     i += 1
+#     return False
 
 
 assert is_sublist_of(['blue', 'green'], ['red','blue', 'green', 'red', 'yellow'])
